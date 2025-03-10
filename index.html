@@ -1,36 +1,202 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <link rel="icon" href="https://www.shutterstock.com/shutterstock/photos/1022948227/display_1500/stock-vector-www-internet-icon-favicon-with-arrow-mouse-cursor-1022948227.jpg">
-        <title>About me</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-        <h1 style="text-align: center;">About Me</h1>
-        <p style="text-align: center;">My two homelands</p>
-        <div style="display: flex; justify-content: center; gap: 10px;">
-                <div style="text-align: center;">
-                    <img src="https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcSffY3vWvpGu6dLmBXpi1FiEjoVityJ8AatcmAQUWZRScnBSp25Sc5yXMwJDldUgXUjaMVPyS2rZl6O0llInZf615rvkWD1QqAfB5a3KQ"
-                         alt="img not found" height="315">
-                         <p style="color: blue; font-family: Arial, Helvetica, sans-serif;">Honduras</p>
-                </div>
-                <div style="text-align: center;">
-                    <img src="https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcT5NaYvxeWLzd0nH2QXfm_LMHRJJOOtINVU1vXOavDQ_Ww8hxHMUW1Q63MBcGPj1kmP1jlK4Hm6xW4A0338EqnySHU79xVEzbTz80xyqA" 
-                         alt="img not found" height="315">
-                         <p style="color: red; font-family: Arial, Helvetica, sans-serif;">Spain</p>
-                </div>
-            </div>
-        <script src="" async defer></script>
-    </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prime Number Confetti</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f5f5f5;
+    }
+    
+    .container {
+      text-align: center;
+      max-width: 600px;
+      padding: 2rem;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    h1 {
+      color: #333;
+      margin-bottom: 2rem;
+    }
+    
+    input {
+      padding: 10px;
+      font-size: 18px;
+      width: 200px;
+      border: 2px solid #ddd;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+    
+    button {
+      padding: 10px 20px;
+      background-color: #4a66f7;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    button:hover {
+      background-color: #3a56e7;
+    }
+    
+    #result {
+      margin-top: 1.5rem;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    
+    /* Confetti styles */
+    .confetti-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 999;
+      overflow: hidden;
+      display: none;
+    }
+    
+    .confetti-container.active {
+      display: block;
+    }
+    
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #f00;
+      opacity: 0.7;
+      animation: fall linear forwards;
+    }
+    
+    @keyframes fall {
+      0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Prime Number Detector</h1>
+    <input type="number" id="numberInput" placeholder="Enter a number">
+    <button id="checkButton">Check Number</button>
+    <div id="result"></div>
+  </div>
+  
+  <div class="confetti-container" id="confettiContainer"></div>
+  
+  <script>
+    const numberInput = document.getElementById('numberInput');
+    const checkButton = document.getElementById('checkButton');
+    const result = document.getElementById('result');
+    const confettiContainer = document.getElementById('confettiContainer');
+    
+    // Function to check if a number is prime
+    function isPrime(num) {
+      if (num <= 1) return false;
+      if (num <= 3) return true;
+      if (num % 2 === 0 || num % 3 === 0) return false;
+      
+      let i = 5;
+      while (i * i <= num) {
+        if (num % i === 0 || num % (i + 2) === 0) return false;
+        i += 6;
+      }
+      return true;
+    }
+    
+    // Function to create confetti
+    function createConfetti() {
+      // Clear previous confetti
+      confettiContainer.innerHTML = '';
+      confettiContainer.classList.add('active');
+      
+      const colors = ['#f00', '#0f0', '#00f', '#ff0', '#f0f', '#0ff', '#fb0', '#f0b'];
+      const shapes = ['square', 'circle'];
+      
+      // Create 100 confetti pieces
+      for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        
+        // Random properties
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const shape = shapes[Math.floor(Math.random() * shapes.length)];
+        const left = Math.random() * 100;
+        const size = Math.random() * 10 + 5;
+        const animationDuration = Math.random() * 3 + 2;
+        
+        // Apply styles
+        confetti.style.backgroundColor = color;
+        confetti.style.left = `${left}%`;
+        confetti.style.width = `${size}px`;
+        confetti.style.height = `${size}px`;
+        confetti.style.animationDuration = `${animationDuration}s`;
+        
+        // Apply shape
+        if (shape === 'circle') {
+          confetti.style.borderRadius = '50%';
+        }
+        
+        confettiContainer.appendChild(confetti);
+      }
+      
+      // Stop confetti after 4 seconds
+      setTimeout(() => {
+        confettiContainer.classList.remove('active');
+      }, 4000);
+    }
+    
+    // Event handler for button click
+    checkButton.addEventListener('click', () => {
+      const number = parseInt(numberInput.value);
+      
+      if (isNaN(number)) {
+        result.textContent = 'Please enter a valid number';
+        return;
+      }
+      
+      const prime = isPrime(number);
+      
+      if (prime) {
+        result.textContent = `${number} is a PRIME number!`;
+        result.style.color = '#4a66f7';
+        createConfetti();
+      } else {
+        result.textContent = `${number} is NOT a prime number.`;
+        result.style.color = '#f44336';
+      }
+    });
+    
+    // Also trigger on Enter key
+    numberInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        checkButton.click();
+      }
+    });
+  </script>
+</body>
 </html>
