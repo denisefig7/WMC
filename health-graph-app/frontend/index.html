@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LifeStyle Tracker</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js"></script>
+  
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>LifeStyle Tracker</h1>
+      <p>Your personal wellness companion for a healthier, happier life</p>
+    </div>
+
+    <div class="nav-tabs">
+      <div class="nav-tab active" onclick="showSection('dashboard')">
+        <i class="fas fa-tachometer-alt"></i> Dashboard
+      </div>
+      <div class="nav-tab" onclick="showSection('nutrition')">
+        <i class="fas fa-apple-alt"></i> Nutrition
+      </div>
+      <div class="nav-tab" onclick="showSection('exercise')">
+        <i class="fas fa-dumbbell"></i> Exercise
+      </div>
+      <div class="nav-tab" onclick="showSection('motivation')">
+        <i class="fas fa-quote-left"></i> Motivation
+      </div>
+      <div class="nav-tab" onclick="showSection('journal')">
+        <i class="fas fa-book"></i> Journal
+      </div>
+
+    </div>
+
+    <!-- Dashboard Section -->
+    <div id="dashboard" class="section active">
+      <h2><i class="fas fa-tachometer-alt"></i> Dashboard</h2>
+      <div class="dashboard-grid">
+        <div class="stat-card">
+          <h3 id="totalSearches">0</h3>
+          <p>Nutrition Searches</p>
+        </div>
+        <div class="stat-card">
+          <h3 id="totalExercises">0</h3>
+          <p>Exercises Viewed</p>
+        </div>
+        <div class="stat-card">
+          <h3 id="totalQuotes">0</h3>
+          <p>Daily Quotes</p>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Welcome to Your Wellness Journey!</h3>
+        <p>Track your nutrition, discover new exercises, get daily motivation, and journal your thoughts. Your path to a healthier lifestyle starts here.</p>
+      </div>
+    </div>
+
+    <!-- Nutrition Section -->
+    <div id="nutrition" class="section">
+      <h2><i class="fas fa-apple-alt"></i> Nutrition Facts</h2>
+      <div class="search-container">
+        <input type="text" id="foodSearch" class="search-input" placeholder="Enter food name (e.g., apple, chicken breast)">
+        <button onclick="searchNutrition()" class="btn">
+          <i class="fas fa-search"></i> Search Nutrition
+        </button>
+      </div>
+      <div id="nutritionResults"></div>
+    </div>
+
+    <!-- Exercise Section -->
+    <div id="exercise" class="section">
+      <h2><i class="fas fa-dumbbell"></i> Exercise Suggestions</h2>
+      <div class="search-container">
+        <select id="exerciseCategory" class="search-input">
+          <option value="">Select Muscle Group</option>
+          <option value="abdominals">Abdominals</option>
+          <option value="biceps">Biceps</option>
+          <option value="triceps">Triceps</option>
+          <option value="chest">Chest</option>
+          <option value="back">Back</option>
+          <option value="quadriceps">Quadriceps</option>
+          <option value="hamstrings">Hamstrings</option>
+          <option value="calves">Calves</option>
+          <option value="glutes">Glutes</option>
+          <option value="shoulders">Shoulders</option>
+        </select>
+        <button onclick="searchExercises()" class="btn">
+          <i class="fas fa-search"></i> Find Exercises
+        </button>
+      </div>
+      <div id="exerciseResults"></div>
+    </div>
+
+    <!-- Motivation Section -->
+    <div id="motivation" class="section">
+      <h2><i class="fas fa-quote-left"></i> Daily Motivation</h2>
+      <div class="card">
+        <button onclick="getMotivationalQuote()" class="btn">
+          <i class="fas fa-refresh"></i> Get New Quote
+        </button>
+      </div>
+      <div id="quoteResults"></div>
+    </div>
+
+    <!-- Journal Section -->
+    <div id="journal" class="section">
+      <h2><i class="fas fa-book"></i> Personal Journal</h2>
+      <div class="card">
+        <h3>Today's Entry</h3>
+        <textarea id="journalEntry" class="notes-area" placeholder="Write your thoughts, goals, achievements, or reflections here..."></textarea>
+        <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+          <button onclick="saveJournalEntry()" class="btn">
+            <i class="fas fa-save"></i> Save Entry
+          </button>
+          <button onclick="loadJournalEntry()" class="btn">
+            <i class="fas fa-folder-open"></i> Load Entry
+          </button>
+          <button onclick="clearJournalEntry()" class="btn">
+            <i class="fas fa-trash"></i> Clear
+          </button>
+        </div>
+      </div>
+      <div id="journalFeedback"></div>
+    </div>
+  </div>
+
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
